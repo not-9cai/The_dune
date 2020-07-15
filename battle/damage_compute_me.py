@@ -1,6 +1,3 @@
-import hero_me as hero
-import monster_me as monster
-
 class Damage:
     def __init__(self,type,damage):
         self.type = type

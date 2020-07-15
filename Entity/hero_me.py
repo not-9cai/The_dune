@@ -1,7 +1,7 @@
-import damage_compute_me as DComp
-import monster_me
-import entity_me
-import io_me
+from battle import damage_compute_me as DComp
+from Entity import entity_me, monster_me
+from IO import io_me
+
 
 class Hero(entity_me.Entity):
     #flags = {}
@@ -30,20 +30,20 @@ class Hero(entity_me.Entity):
     #Hero.MP就是100这个数了
 
     def print_status(self):
-        io_me.printStuff("你看了看自己的身体",1)
+        io_me.printStuff("你看了看自己的身体", 1)
         if(self.flags['Alive'] == True):
-            io_me.printStuff("我好像还活着",0)
+            io_me.printStuff("我好像还活着", 0)
         else:
-            io_me.printStuff("一阵眩晕感袭来，我好像已经。。死了？",0)
-        io_me.printStuff(self.name,0)
-        io_me.printStuff("HP:"+str(self.HP) + "/"+str(self.MaxHP),0)
-        io_me.printStuff("MP:"+str(self.MP),0)
-        io_me.printStuff("lvl:"+str(self.LVL),0)
+            io_me.printStuff("一阵眩晕感袭来，我好像已经。。死了？", 0)
+        io_me.printStuff(self.name, 0)
+        io_me.printStuff("HP:" + str(self.HP) + "/" + str(self.MaxHP), 0)
+        io_me.printStuff("MP:" + str(self.MP), 0)
+        io_me.printStuff("lvl:" + str(self.LVL), 0)
         line = io_me.getStuff("要不要看看详细情报？1=看看，2=算了")
         if line == '1':
-            io_me.printStuff("ATK:" + str(self.ATK),0)
-            io_me.printStuff("DEF:" + str(self.DEF),0)
-            io_me.printStuff("SPD:" + str(self.SPD),0)
+            io_me.printStuff("ATK:" + str(self.ATK), 0)
+            io_me.printStuff("DEF:" + str(self.DEF), 0)
+            io_me.printStuff("SPD:" + str(self.SPD), 0)
 
 
     def heal_hero(self,healing):
@@ -64,7 +64,7 @@ class Hero(entity_me.Entity):
         return self.flags['Alive']
 
     def attack(self,monster):
-        if(isinstance(monster,monster_me.Slime)):
+        if(isinstance(monster, monster_me.Slime)):
             return DComp.Damage('physics', self.ATK+2)
         else:
             return DComp.Damage('physics', self.ATK)
@@ -78,6 +78,14 @@ class Hero(entity_me.Entity):
     def getSPD(self):
         return self.SPD
 
+    def validTarget(self, otherEntity):
+        if isinstance(self, Hero):
+            return isinstance(otherEntity, monster_me.Monster) and otherEntity.isAlive()
+        elif isinstance(self, monster_me.Monster):
+            return isinstance(otherEntity, Hero) and otherEntity.isAlive()
+        else:
+            return False
+
     def updateHero(self):
         while(self.EXP >= 100):
             self.EXP -= 100
@@ -87,4 +95,4 @@ class Hero(entity_me.Entity):
             self.DEF +=10
             self.HP = self.MaxHP
 
-            io_me.printStuff(str(self.name) + "升到了" + str(self.LVL) + "级！",0)
+            io_me.printStuff(str(self.name) + "升到了" + str(self.LVL) + "级！", 0)

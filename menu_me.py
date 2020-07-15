@@ -1,8 +1,6 @@
-import event_pool_me as eventpool
-import event_me as event
-import monster_me
-import monster_dictionary_me
-import io_me
+from container import event_pool_me as eventpool, monster_dictionary_me
+from Event import event_me as event
+from IO import io_me
 
 import sys
 import os
@@ -57,26 +55,26 @@ class Menu:
             self.events.showAvaliableEvent()
 
         def case4(hero):  # 结束游戏
-            io_me.printStuff('你再次沉沉的睡去，就好像，一切从未发生过',0)
-            io_me.printStuff('Game Over',0)
+            io_me.printStuff('你再次沉沉的睡去，就好像，一切从未发生过', 0)
+            io_me.printStuff('Game Over', 0)
             sys.exit(0)   #这可能不太对2333333
 
         def default(hero):  # 默认情况下执行的函数
-            io_me.printStuff('你胡乱做了些什么，然而什么都没有发生',0.3)
+            io_me.printStuff('你胡乱做了些什么，然而什么都没有发生', 0.3)
 
 
         menupannel = {1:case1,2:case2,3:case3,4:case4}
 
         if(self.ranEvent == 0):
-            io_me.printStuff("你从家中醒来，再一次凝望着熟悉的天花板。这一次，似乎会有什么不同。",1)
+            io_me.printStuff("你从家中醒来，再一次凝望着熟悉的天花板。这一次，似乎会有什么不同。", 1)
             self.ranEvent = 2
-        io_me.printStuff("做些什么事情？1=显示人物状态，2=抽随机事件，3=显示当前可选事件,4=退出",0)
+        io_me.printStuff("做些什么事情？1=显示人物状态，2=抽随机事件，3=显示当前可选事件,4=退出", 0)
         line = int(input())
         menupannel.get(line, default)(hero)
 
 
     def updateMenu(self,hero):
-        io_me.printStuff("updating playable level",0)
+        io_me.printStuff("updating playable level", 0)
         time.sleep(0.3)
         os.system('cls')
         #self.events.removePlayedEvent(hero)

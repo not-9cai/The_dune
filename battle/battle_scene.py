@@ -1,6 +1,5 @@
-import entity_me
-import hero_me
-import monster_me
+from Entity import hero_me, monster_me
+
 
 class BattleScene:
     def __init__(self):
@@ -46,8 +45,8 @@ class ATPool:
         heroes = 0
         enemies = 0
         for entities in self.entitypool:
-            if isinstance(entities,hero_me.Hero) and entities.isAlive():
+            if isinstance(entities, hero_me.Hero) and entities.isAlive():
                 heroes += 1
-            if isinstance(entities,monster_me.Monster) and entities.isAlive():
+            if isinstance(entities, monster_me.Monster) and entities.isAlive():
                 enemies += 1
         return not ((heroes>0) and (enemies>0))

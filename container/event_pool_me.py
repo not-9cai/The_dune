@@ -1,4 +1,3 @@
-from event_me import Event
 import random
 
 class Eventpool():

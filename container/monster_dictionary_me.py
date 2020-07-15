@@ -1,10 +1,10 @@
-import monster_me
+from Entity import monster_me
 import random
 
 class MonsterDictionary:
     def __init__(self):
         self.name = 'defaultDic'
-        self.monsterDic = {'slime': monster_me.Slime(), 'evilMage': monster_me.EvilMage(),'ogre':monster_me.Ogre()}
+        self.monsterDic = {'slime': monster_me.Slime(), 'evilMage': monster_me.EvilMage(), 'ogre': monster_me.Ogre()}
 
     def addMonster(self,monster,name):
         self.monsterDic[name] = monster

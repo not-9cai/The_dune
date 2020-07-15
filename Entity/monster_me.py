@@ -1,5 +1,6 @@
-import damage_compute_me as DComp
-import entity_me
+from battle import damage_compute_me as DComp
+from Entity import entity_me,hero_me
+
 
 class Monster(entity_me.Entity):
     def __init__(self):
@@ -33,6 +34,14 @@ class Monster(entity_me.Entity):
 
     def getSPD(self):
         return self.SPD
+
+    def validTarget(self, otherEntity):
+        if isinstance(self, hero_me.Hero):
+            return isinstance(otherEntity, Monster) and otherEntity.isAlive()
+        elif isinstance(self, Monster):
+            return isinstance(otherEntity, hero_me.Hero) and otherEntity.isAlive()
+        else:
+            return False
 
 
 class Slime(Monster):
