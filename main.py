@@ -1,12 +1,16 @@
 from Entity import hero_me
 import menu_me as menu
 from IO import io_me
+import config_me
 
 omc = hero_me.Hero()
 omc.name = 'omc'
 
 myMenu = menu.Menu()
+myconfig = config_me.config()
+myMenu.config = myconfig
 myMenu.standardInitialize()
+
 
 line = input("Do you want to skip story? 1=Yes,2=No")
 if(not line == '1'):

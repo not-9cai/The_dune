@@ -5,6 +5,7 @@ class Eventpool():
         self.eventpool = []
 
     def addEvent(self,Event):
+        Event.config = self.config
         self.eventpool.append(Event)
 
     def removeEvent(self,Event):

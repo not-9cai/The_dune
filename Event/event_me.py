@@ -1,6 +1,6 @@
 from IO import io_me
 from battle import battle_scene
-
+from Event import plot_me
 
 class Event:
     def __init__(self):
@@ -202,3 +202,19 @@ class BattleRandomMonsterEvent(Event):
         for i in range (len(self.monsters)):
             self.monsters[i] = self.myMonsterDic.getRandomMonster()
         return 0
+
+
+
+class PlotEvent(Event):
+    def __init__(self,filename):
+        self.name = "PlotEvent" + filename
+        self.filename = "Event/plots/"+ filename + ".txt"
+        self.IsFinished = 0
+
+    def showPlot(self, hero):
+        self.myplot = plot_me.Plots(self.config.textspeed)
+        self.myplot.readFile(self.filename)
+        self.IsFinished = 1
+
+        return 1
+

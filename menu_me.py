@@ -32,12 +32,14 @@ class Menu:
 
     def initializeEvent(self):
         self.events.removeAllEvent()
+        self.events.config = self.config
         #self.events.addEvent(event.TestEvent())
         #self.events.addEvent(event.TestEvent2())
         #self.events.addEvent(event.BattleEvent())
         #self.events.addEvent(event.BattleMonsterEvent(self.monsterDic.getMonster('slime')))
-        self.events.addEvent(event.BattleFixedMonsterEvent(0, self.monsterDic))
-        self.events.addEvent(event.BattleRandomMonsterEvent(0, self.monsterDic))
+        #self.events.addEvent(event.BattleFixedMonsterEvent(0, self.monsterDic))
+        #self.events.addEvent(event.BattleRandomMonsterEvent(0, self.monsterDic))
+        self.events.addEvent(event.PlotEvent("序章"))
         #self.events.addEvent(event.HealEvent())
 
     def run(self,hero):
@@ -69,7 +71,7 @@ class Menu:
             io_me.printStuff("你从家中醒来，再一次凝望着熟悉的天花板。这一次，似乎会有什么不同。", 1)
             self.ranEvent = 2
         io_me.printStuff("做些什么事情？1=显示人物状态，2=抽随机事件，3=显示当前可选事件,4=退出", 0)
-        line = int(input())
+        line = int(io_me.getStuff(''))
         menupannel.get(line, default)(hero)
 
 
