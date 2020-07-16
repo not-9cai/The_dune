@@ -65,7 +65,7 @@ class BattleEvent(Event):
 
     def showPlot(self, hero):
         io_me.printStuff("input damage delt to hero", 0)
-        damage = int(io_me.getStuff())
+        damage = int(io_me.getStuff(''))
         dmg_took = hero.take_damage(damage)
         io_me.printStuff(hero.name + "受到了" + str(dmg_took) + "点伤害", 0)
         if (hero.HP <= 0):
