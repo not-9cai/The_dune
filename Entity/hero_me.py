@@ -1,5 +1,6 @@
 from battle import damage_compute_me as DComp
 from Entity import entity_me, monster_me
+import random
 from IO import io_me
 
 
@@ -15,8 +16,12 @@ class Hero(entity_me.Entity):
         self.MP = 100
         self.ATK = 100
         self.DEF = 100
+        self.ATS = 150
+        self.ADF = 0
         self.STR = 100
         self.INT = 100
+        self.ACC = 25
+        self.EVD = 30
         self.LVL = 0
         self.EXP = 0
         self.SPD = 10
@@ -64,10 +69,17 @@ class Hero(entity_me.Entity):
         return self.flags['Alive']
 
     def attack(self,monster):
-        if(isinstance(monster, monster_me.Slime)):
-            return DComp.Damage('physics', self.ATK+2)
-        else:
-            return DComp.Damage('physics', self.ATK)
+        io_me.printStuff(self.name+" 的回合！", 0)
+        chose = int(io_me.getStuff('physics=1,magic=2'))
+        if chose == 1:
+            if(isinstance(monster, monster_me.Slime)):
+                return DComp.Damage('physics', self.ATK+2,self.ACC+ random.randint(1,100),self.SPD)
+            else:
+                return DComp.Damage('physics', self.ATK,self.ACC+ random.randint(1,100),self.SPD)
+        if chose == 2:
+            return DComp.Damage('magic', self.ATS,self.ACC+ random.randint(1,100),self.SPD*2)
+
+
 
     def gainExp(self,monster):
         self.EXP += monster.EXP
@@ -77,6 +89,22 @@ class Hero(entity_me.Entity):
 
     def getSPD(self):
         return self.SPD
+
+    def rollEVD(self,acc):
+        return self.EVD
+
+    def afterEVD(self,dmg):
+        flag = io_me.getStuff("是否使用奇策？1=是 2=否")
+        actualacc = dmg.acc-self.ACC
+        dmg2 = dmg.clone()
+        if int(flag) == 1:
+            tmp1 = actualacc % 10
+            tmp2 = int((actualacc - tmp1)/10)
+            dmg2.acc = tmp2+tmp1*10+self.ACC
+            dmg2.changed = 1
+            return dmg2
+        else:
+            return dmg2
 
     def validTarget(self, otherEntity):
         if isinstance(self, Hero):
@@ -96,3 +124,23 @@ class Hero(entity_me.Entity):
             self.HP = self.MaxHP
 
             io_me.printStuff(str(self.name) + "升到了" + str(self.LVL) + "级！", 0)
+
+    def clone(self):
+        tmp_hero = Hero()
+        tmp_hero.name = self.name
+        tmp_hero.ATK = self.ATK
+        tmp_hero.HP = self.HP
+        tmp_hero.MaxHP = self.MaxHP
+        tmp_hero.MP = self.MP
+        tmp_hero.DEF = self.DEF
+        tmp_hero.ATS = self.ATS
+        tmp_hero.ADF = self.ADF
+        tmp_hero.STR = self.STR
+        tmp_hero.INT = self.INT
+        tmp_hero.ACC = self.ACC
+        tmp_hero.EVD = self.EVD
+        tmp_hero.LVL = self.LVL
+        tmp_hero.EXP = self.EXP
+        tmp_hero.SPD = self.SPD
+        tmp_hero.eventcount = self.eventcount
+        return tmp_hero

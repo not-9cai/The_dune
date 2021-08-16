@@ -132,7 +132,7 @@ class BattleBossEvent(Event):
 
 class BattleFixedMonsterEvent(Event):
     def __init__(self,num,monsterDic):
-        self.name = 'battle_multple'
+        self.name = 'battle_fixed'
         self.IsFinished = 0
         self.monsters = []
         self.monsterBackup = []
@@ -171,13 +171,13 @@ class BattleFixedMonsterEvent(Event):
 
 class BattleRandomMonsterEvent(Event):
     def __init__(self,num,monsterDic):
-        self.name = 'battle_multple'
+        self.name = 'battle_random'
         self.IsFinished = 0
         self.monsters = []
         self.myMonsterDic = monsterDic
         if num == 0:
             self.monsters.append(monsterDic.getRandomMonster())
-            self.monsters.append(monsterDic.getRandomMonster())
+            #self.monsters.append(monsterDic.getRandomMonster())
 
 
     def showPlot(self, hero):
@@ -217,4 +217,47 @@ class PlotEvent(Event):
         self.IsFinished = 1
 
         return 1
+
+
+class BattleMultipleEvent(Event):
+    def __init__(self,num,monsterDic,heroDic):
+        self.name = 'battle_multple'
+        self.IsFinished = 0
+        self.monsters = []
+        self.myMonsterDic = monsterDic
+        self.heroes = []
+        self.myHeroDic = heroDic
+        if num == 0:
+            self.monsters.append(monsterDic.getRandomMonster())
+            self.monsters.append(monsterDic.getRandomMonster())
+            self.monsters.append(monsterDic.getRandomMonster())
+            self.heroes.append(heroDic.getRandomHero())
+
+    def showPlot(self, hero):
+        # print("Battle"+str(self.monster.name))
+        self.battleScene = battle_scene.BattleScene()
+        for mon in self.monsters:
+            self.battleScene.addEntity(mon)
+        for otherhero in self.heroes:
+            otherhero.SPD = 40
+            self.battleScene.addEntity(otherhero)
+        self.battleScene.addEntity(hero)
+        self.battleScene.run()
+        if (hero.HP <= 0):
+            hero.flags['Alive'] = False
+            io_me.printStuff(hero.name + "倒下了", 0)
+        else:
+            for mon in self.monsters:
+                hero.gainExp(mon)
+            io_me.printStuff(hero.name + "获胜", 0)
+        self.IsFinished = 1
+        return 1
+
+    def updateEvent(self, hero):
+        for i in range(len(self.monsters)):
+            self.monsters[i] = self.myMonsterDic.getRandomMonster()
+        for j in range(len(self.heroes)):
+            self.heroes[i] = self.myHeroDic.getRandomHero()
+        return 0
+
 

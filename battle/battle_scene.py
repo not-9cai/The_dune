@@ -29,6 +29,11 @@ class ATPool:
 
     def getEntityInAction(self):
         entitySort = sorted(self.ATPool_m.items(), key=lambda x: x[1], reverse=False)
+        if entitySort[0][1] == entitySort[1][1]:
+            if self.getEntityByID(entitySort[0][0]).SPD < self.getEntityByID(entitySort[1][0]).SPD:
+                return self.getEntityByID(entitySort[1][0])
+            else:
+                return self.getEntityByID(entitySort[0][0])
         return self.getEntityByID(entitySort[0][0])
 
     def getEntityByID(self, name):
@@ -38,8 +43,8 @@ class ATPool:
         return None
 
     def action(self,entity,battleScene):
-        entity.action(battleScene)
-        self.ATPool_m[entity.getID()] += entity.getSPD()
+        ATdelay = entity.action(battleScene)
+        self.ATPool_m[entity.getID()] += ATdelay
 
     def isEnd(self):
         heroes = 0

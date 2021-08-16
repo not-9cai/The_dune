@@ -1,4 +1,5 @@
 from Entity import monster_me
+from Entity import hero_me
 import random
 
 class MonsterDictionary:
@@ -21,3 +22,25 @@ class MonsterDictionary:
         mons = MonsterDictionary()
         mons.mosterDic = self.monsterDic.copy()
         return mons
+
+
+class HeroDictionary:
+    def __init__(self):
+        self.name = 'defaultHeroDic'
+        self.heroDic = {'guy': hero_me.Hero()}
+
+    def addHero(self,monster,name):
+        self.heroDic[name] = monster
+
+    def getHero(self,name):
+        return self.heroDic[name].clone()
+
+    def getRandomHero(self):
+        monList = list(self.heroDic.keys())
+        monName = monList[random.randint(0,len(monList)-1)]
+        return self.heroDic[monName].clone()
+
+    def clone(self):
+        heros = HeroDictionary()
+        heros.heroDic = self.heroDic.copy()
+        return heros

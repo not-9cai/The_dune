@@ -14,6 +14,7 @@ class Menu:
         self.events = eventpool.Eventpool()
         self.eventcount = 0
         self.monsterDic = monster_dictionary_me.MonsterDictionary()
+        self.heroDic = monster_dictionary_me.HeroDictionary()
         self.ranEvent = 0
 
 
@@ -39,7 +40,8 @@ class Menu:
         #self.events.addEvent(event.BattleMonsterEvent(self.monsterDic.getMonster('slime')))
         #self.events.addEvent(event.BattleFixedMonsterEvent(0, self.monsterDic))
         #self.events.addEvent(event.BattleRandomMonsterEvent(0, self.monsterDic))
-        self.events.addEvent(event.PlotEvent("序章"))
+        self.events.addEvent(event.BattleMultipleEvent(0,self.monsterDic, self.heroDic))
+        #self.events.addEvent(event.PlotEvent("序章"))
         #self.events.addEvent(event.HealEvent())
 
     def run(self,hero):
