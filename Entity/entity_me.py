@@ -48,6 +48,6 @@ class Entity:
                     io_me.printStuff(it.name + " 受到了来自于 " + self.name + " 的" + str(dmg_took) + "点伤害——————HP(" + str(it.HP) + "/" + str(it.MaxHP) + ")", 0.3)
                     #print(it.ID + "受到了来自于" + self.ID +"的"+ str(dmg_took) + "点伤害——————HP(" + str(it.HP) + "/" + str(it.MaxHP) + ")")
                 else:
-                    io_me.printStuff(it.name + " 受到了来自于" + self.name + " 的攻击，但躲开了！",0.3)
+                    io_me.printStuff(it.name + " 受到了来自于 " + self.name + " 的攻击，但躲开了！",0.3)
                 return dmg_tmp.ATdelay
         return 1
